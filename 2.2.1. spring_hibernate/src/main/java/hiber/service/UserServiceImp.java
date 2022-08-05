@@ -15,12 +15,14 @@ import java.util.List;
 
 @Service
 public class UserServiceImp implements UserService {
+   private final SessionFactory sessionFactory;
 
-   @Autowired
-   private SessionFactory sessionFactory;
+   private final UserDao userDao;
 
-   @Autowired
-   private UserDao userDao;
+   public UserServiceImp(UserDao userDao, SessionFactory sessionFactory) {
+      this.userDao = userDao;
+      this.sessionFactory = sessionFactory;
+   }
 
    @Transactional
    @Override
@@ -38,5 +40,9 @@ public class UserServiceImp implements UserService {
    @Override
    public User getUserByCar (String model, int series) {
       return userDao.getUserByCar(model, series);
+   }
+
+   public SessionFactory getSessionFactory() {
+      return sessionFactory;
    }
 }
